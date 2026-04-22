@@ -11,7 +11,8 @@ import {
 import SideBar from "@/component/dashboard/Sidebar";
 import Topbar from "@/component/dashboard/Topbar";
 
-export const drawerWidth = 250;
+// REMOVE 'export' FROM THIS LINE
+const drawerWidth = 250;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -27,7 +28,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md")); // Replaces custom useWindowSize
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const [open, setOpen] = React.useState(!isMobile);
 
@@ -60,7 +61,6 @@ export default function DashboardLayout({
         sx={{ flexGrow: 1, px: 3, py: 5, minHeight: "100%" }}
       >
         <DrawerHeader />
-        {/* Next.js renders the nested pages inside children, replacing <Outlet /> */}
         {children}
       </Box>
     </Box>
