@@ -2,18 +2,16 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { getAppointments, deleteAppointment } from "@/utils/storage"; 
-import { Appointment } from "@/types/interface"; 
-import { toast } from "sonner"; 
-import { 
-  Box, 
-  Typography, 
-  Button, 
-  Card, 
-  CardContent, 
-  Divider, 
+import { getAppointments, deleteAppointment } from "@/utils/storage";
+import { Appointment } from "@/types/interface";
+import { toast } from "sonner";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Divider,
   Paper,
-  IconButton
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -46,7 +44,6 @@ export default function AppointmentsPage() {
     });
   };
 
-  // Improved sorting to handle both "HH:MM" and "HH:MM AM/PM" formats safely
   const sortedAppointments = [...appointments].sort((a, b) => {
     const dateA = new Date(`${a.date} ${a.time}`);
     const dateB = new Date(`${b.date} ${b.time}`);
@@ -55,13 +52,12 @@ export default function AppointmentsPage() {
 
   return (
     <Box className="px-[5%]">
-      {/* HEADER SECTION */}
+      {/* HEADER */}
       <Box className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
         <Box>
-          
           <h1 className="text-3xl font-bold text-gray-900">
-                         My Appointments
-                      </h1>
+            My Appointments
+          </h1>
           <p className="text-gray-600">
             View and manage your scheduled appointments
           </p>
@@ -69,38 +65,38 @@ export default function AppointmentsPage() {
 
         <Button
           variant="contained"
-          color="primary"
           startIcon={<AddIcon />}
           onClick={() => router.push("/dashboard/doctor")}
-          disableElevation
           sx={{ borderRadius: "8px", textTransform: "none", px: 3, py: 1.2 }}
         >
           Book New
         </Button>
       </Box>
 
-      {/* APPOINTMENTS LIST OR EMPTY STATE */}
+      {/* EMPTY STATE */}
       {sortedAppointments.length === 0 ? (
-        <Paper 
-          elevation={0} 
-          sx={{ 
-            p: 8, 
-            textAlign: "center", 
-            borderRadius: "16px", 
+        <Paper
+          elevation={0}
+          sx={{
+            p: 8,
+            textAlign: "center",
+            borderRadius: "16px",
             border: "1px dashed #e5e7eb",
-            backgroundColor: "#f9fafb"
+            backgroundColor: "#f9fafb",
           }}
         >
           <EventBusyIcon sx={{ fontSize: 60, color: "#9ca3af", mb: 2 }} />
-          <Typography variant="h6" color="text.primary" fontWeight="medium">
+
+          <h2 className="text-xl font-semibold text-gray-900">
             No appointments yet
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 4, mt: 1, maxWidth: 400, mx: "auto" }}>
-            You haven't booked any appointments. Start by browsing our available doctors and scheduling a time that works for you.
-          </Typography>
-          <Button 
-            variant="contained" 
-            disableElevation
+          </h2>
+
+          <p className="text-gray-500 mt-2 mb-6 max-w-md mx-auto">
+            You haven&apos;t booked any appointments. Start by browsing doctors.
+          </p>
+
+          <Button
+            variant="contained"
             startIcon={<AddIcon />}
             onClick={() => router.push("/dashboard/doctor")}
             sx={{ borderRadius: "8px", textTransform: "none", px: 4, py: 1.2 }}
@@ -111,63 +107,58 @@ export default function AppointmentsPage() {
       ) : (
         <Box className="space-y-4">
           {sortedAppointments.map((appointment) => (
-            <Card 
-              key={appointment.id} 
-              elevation={0} 
-              sx={{ 
-                borderRadius: "16px", 
+            <Card
+              key={appointment.id}
+              elevation={0}
+              sx={{
+                borderRadius: "16px",
                 border: "1px solid #f3f4f6",
-                transition: "all 0.3s ease",
                 "&:hover": {
-                  boxShadow: "0 4px 20px -5px rgba(0, 0, 0, 0.05)",
-                  borderColor: "primary.light"
-                }
+                  boxShadow: "0 4px 20px rgba(0,0,0,0.05)",
+                },
               }}
             >
-              <CardContent sx={{ p: 3, pb: "24px !important" }}>
-                <Box className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-                  
-                  {/* Info Section */}
+              <CardContent>
+                <Box className="flex flex-col sm:flex-row justify-between gap-4">
+                  {/* INFO */}
                   <Box className="flex-1">
-                    <Typography variant="h6" fontWeight="bold" color="text.primary" sx={{ mb: 2 }}>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
                       {appointment.doctorName}
-                    </Typography>
+                    </h3>
 
-                    <Box className="space-y-2">
-                      <Box className="flex items-center text-gray-600 gap-2">
-                        <CalendarTodayIcon sx={{ fontSize: 18, color: "primary.main" }} />
-                        <Typography variant="body2">{formatDate(appointment.date)}</Typography>
-                      </Box>
-                      <Box className="flex items-center text-gray-600 gap-2">
-                        <AccessTimeIcon sx={{ fontSize: 18, color: "primary.main" }} />
-                        <Typography variant="body2">{appointment.time}</Typography>
-                      </Box>
-                    </Box>
+                    <div className="space-y-2 text-gray-600 text-sm">
+                      <div className="flex items-center gap-2">
+                        <CalendarTodayIcon sx={{ fontSize: 18 }} />
+                        <span>{formatDate(appointment.date)}</span>
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <AccessTimeIcon sx={{ fontSize: 18 }} />
+                        <span>{appointment.time}</span>
+                      </div>
+                    </div>
 
                     <Divider sx={{ my: 2, borderStyle: "dashed" }} />
-                    
-                    <Box>
-                      <Typography variant="caption" fontWeight="bold" color="text.secondary" sx={{ textTransform: "uppercase", letterSpacing: 0.5 }}>
+
+                    <div>
+                      <p className="text-xs uppercase text-gray-400 font-semibold">
                         Reason for visit
-                      </Typography>
-                      <Typography variant="body2" color="text.primary" sx={{ mt: 0.5 }}>
+                      </p>
+                      <p className="text-sm text-gray-800 mt-1">
                         {appointment.reason}
-                      </Typography>
-                    </Box>
+                      </p>
+                    </div>
                   </Box>
 
-                  {/* Action Section */}
+                  {/* ACTION */}
                   <Button
                     variant="outlined"
                     color="error"
-                    // startIcon={<DeleteOutlineIcon />}
                     onClick={() => handleDelete(appointment.id)}
-                    sx={{ 
-                      borderRadius: "8px", 
-                      textTransform: "none", 
+                    sx={{
+                      borderRadius: "8px",
+                      textTransform: "none",
                       alignSelf: { xs: "stretch", sm: "flex-start" },
-                      borderWidth: "1px",
-                      "&:hover": { borderWidth: "1px", backgroundColor: "error.50" }
                     }}
                   >
                     Cancel

@@ -45,12 +45,12 @@ export default function BookAppointmentPage() {
 
   if (!doctor) {
     return (
-      <Box textAlign="center" mt={10}>
+      <div className="text-center mt-8">
         <Typography variant="h5">Doctor not found</Typography>
         <Button onClick={() => router.back()} sx={{ mt: 2 }}>
           Go Back
         </Button>
-      </Box>
+      </div>
     );
   }
 
@@ -103,9 +103,7 @@ export default function BookAppointmentPage() {
           <ArrowBackIcon />
         </IconButton>
 
-        <Typography component={"span"} variant="body1" fontWeight={700}>
-          Go Back
-        </Typography>
+        <p className="font-semibold-">Go Back</p>
       </div>
       <div className="max-w-7xl mx-auto">
         {/* DOCTOR CARD */}
@@ -117,13 +115,13 @@ export default function BookAppointmentPage() {
             />
 
             <Box>
-              <Typography fontWeight={700}>{doctor.name}</Typography>
-              <Stack direction="row" spacing={1} alignItems="center">
+              <h5 className="text-lg font-bold">{doctor.name}</h5>
+              <div className="flex gap-4 items-center ">
                 <StethoscopeIcon fontSize="small" />
                 <Typography color="text.secondary">
                   {doctor.specialty}
                 </Typography>
-              </Stack>
+              </div>
             </Box>
           </CardContent>
         </Card>
@@ -131,9 +129,7 @@ export default function BookAppointmentPage() {
         {/* FORM */}
         <Card sx={{ borderRadius: 3 }}>
           <CardContent>
-            <Typography fontWeight={600} mb={3}>
-              Appointment Details
-            </Typography>
+            <h4 className="font-semibold mb-5">Appointment Details</h4>
 
             <form onSubmit={handleSubmit}>
               <Stack spacing={3}>
@@ -144,8 +140,8 @@ export default function BookAppointmentPage() {
                   fullWidth
                   value={form.date}
                   onChange={(e) => setForm({ ...form, date: e.target.value })}
-                  InputLabelProps={{ shrink: true }}
-                  inputProps={{ min: today }}
+                  // InputLabelProps={{ shrink: true }}
+                  // inputProps={{ min: today }}
                   error={!!errors.date}
                   helperText={errors.date}
                   sx={{ borderRadius: 2 }}
@@ -166,7 +162,7 @@ export default function BookAppointmentPage() {
                       form.date && isSlotBooked(doctor.id, form.date, slot);
 
                     return (
-                      <MenuItem key={slot} value={slot} disabled={booked}>
+                      <MenuItem key={slot} value={slot}>
                         {slot} {booked && "(Booked)"}
                       </MenuItem>
                     );

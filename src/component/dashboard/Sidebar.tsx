@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   List,
@@ -11,7 +11,6 @@ import {
   type Theme,
   type CSSObject,
   Box,
-  Typography,
 } from "@mui/material";
 import MuiDrawer from "@mui/material/Drawer";
 import Link from "next/link";
@@ -95,38 +94,31 @@ const SideBar = ({ open, handleDrawerClose, drawerWidth }: SideBarProps) => {
           justifyContent: "center",
           position: "relative",
           py: 3,
-          px:2
+          px: 2,
         }}
       >
-       <Link
-  href="/"
-  style={{
-    textDecoration: "none",
-    color: "inherit",
-    width: "100%",
-  }}
->
-  <Box
-    sx={{
-      display: "flex",
-      alignItems: "center",
-      gap: 1,
-      opacity: open ? 1 : 0,
-      transition: "0.3s",
-      cursor: "pointer",
-    }}
-  >
-    <HealthAndSafetyIcon sx={{ fontSize: 32 }} />
-    <Typography
-      component="h6"
-      variant="h6"
-      fontWeight={700}
-      fontSize={20}
-    >
-      VirtuCare
-    </Typography>
-  </Box>
-</Link>
+        <Link
+          href="/"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            width: "100%",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+              opacity: open ? 1 : 0,
+              transition: "0.3s",
+              cursor: "pointer",
+            }}
+          >
+            <HealthAndSafetyIcon sx={{ fontSize: 32 }} />
+            <span className="text-lg font-bold">VirtuCare</span>
+          </Box>
+        </Link>
 
         <IconButton
           onClick={handleDrawerClose}
@@ -177,14 +169,16 @@ const SideBar = ({ open, handleDrawerClose, drawerWidth }: SideBarProps) => {
                   </ListItemIcon>
 
                   <ListItemText
-                    primary={item.text}
-                    sx={{
-                      opacity: open ? 1 : 0,
-                      "& span": {
-                        fontSize: "0.95rem",
-                        fontWeight: isActive ? 600 : 400,
-                      },
-                    }}
+                    primary={
+                      <span
+                        className={`text-sm ${
+                          isActive ? "font-semibold" : "font-normal"
+                        }`}
+                      >
+                        {item.text}
+                      </span>
+                    }
+                    sx={{ opacity: open ? 1 : 0 }}
                   />
                 </ListItemButton>
               </Link>
