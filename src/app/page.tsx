@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Button } from "@mui/material";
@@ -8,12 +8,12 @@ import { Button } from "@mui/material";
 
 
 export default function LandingPage() {
-  const router = useRouter();
+  // const router = useRouter();
 
-  const handleBookAppointment = () => {
-    // Routes the user to the login page
-    router.push("/login");
-  };
+  // const handleBookAppointment = () => {
+  //   // Routes the user to the login page
+  //   router.push("/login");
+  // };
 
   return (
     <main className="min-h-screen bg-gray-50 pb-12">
