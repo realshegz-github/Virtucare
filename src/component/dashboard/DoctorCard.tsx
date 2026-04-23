@@ -107,6 +107,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
             textTransform: "none",
             fontWeight: "bold",
             py: 1.2,
+            backgroundColor:"#2563eb",
           }}
         >
           Book Appointment
