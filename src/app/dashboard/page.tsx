@@ -83,7 +83,7 @@ export default function DashboardOverview() {
   return (
     <Box className="px-[5%] py-5">
       {/* HEADER */}
-      <Box className="flex flex-col sm:flex-row justify-between mb-8 gap-4">
+      <Box className="flex flex-col sm:flex-row justify-between mb-12 gap-4">
         <Box>
           <h1 className="text-3xl font-bold text-gray-900">
             Dashboard Overview

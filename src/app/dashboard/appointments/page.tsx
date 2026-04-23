@@ -12,6 +12,8 @@ import {
   CardContent,
   Divider,
   Paper,
+  CircularProgress, // Import the loader
+  Typography,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -21,9 +23,16 @@ import EventBusyIcon from "@mui/icons-material/EventBusy";
 export default function AppointmentsPage() {
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // 1. Add loading state
 
   useEffect(() => {
-    setAppointments(getAppointments());
+    // Simulate a small delay for a smoother UX or handle instant local load
+    const timer = setTimeout(() => {
+      setAppointments(getAppointments());
+      setIsLoading(false); // 2. Stop loading once data is fetched
+    }, 800);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleDelete = (id: string) => {
@@ -49,6 +58,26 @@ export default function AppointmentsPage() {
     const dateB = new Date(`${b.date} ${b.time}`);
     return dateA.getTime() - dateB.getTime();
   });
+
+  // 3. Render Loader before the main content
+  if (isLoading) {
+    return (
+      <Box 
+        sx={{ 
+          display: "flex", 
+          flexDirection: "column",
+          alignItems: "center", 
+          justifyContent: "center", 
+          minHeight: "60vh" 
+        }}
+      >
+        <CircularProgress size={40} thickness={4} sx={{ mb: 2 }} />
+        <Typography variant="body2" color="text.secondary">
+          Loading your appointments...
+        </Typography>
+      </Box>
+    );
+  }
 
   return (
     <Box className="px-[5%]">
