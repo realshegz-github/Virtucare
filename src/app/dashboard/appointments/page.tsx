@@ -12,7 +12,7 @@ import {
   CardContent,
   Divider,
   Paper,
-  CircularProgress, // Import the loader
+  CircularProgress, 
   Typography,
 } from "@mui/material";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
@@ -23,13 +23,13 @@ import EventBusyIcon from "@mui/icons-material/EventBusy";
 export default function AppointmentsPage() {
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
-  const [isLoading, setIsLoading] = useState(true); // 1. Add loading state
+  const [isLoading, setIsLoading] = useState(true); 
 
   useEffect(() => {
     // Simulate a small delay for a smoother UX or handle instant local load
     const timer = setTimeout(() => {
       setAppointments(getAppointments());
-      setIsLoading(false); // 2. Stop loading once data is fetched
+      setIsLoading(false); 
     }, 800);
 
     return () => clearTimeout(timer);
@@ -59,7 +59,6 @@ export default function AppointmentsPage() {
     return dateA.getTime() - dateB.getTime();
   });
 
-  // 3. Render Loader before the main content
   if (isLoading) {
     return (
       <Box 

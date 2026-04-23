@@ -9,15 +9,9 @@ import {
   Button,
   Card,
   CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Paper,
-  Chip,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
@@ -25,206 +19,108 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
 import InboxIcon from "@mui/icons-material/Inbox";
+import AppointmentTable from "@/component/dashboard/AppointmentTable";
 
 export default function DashboardOverview() {
   const router = useRouter();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedAppointments = getAppointments();
+    const fetchDashboardData = () => {
+      const stored = getAppointments();
+      const sorted = stored.sort((a, b) => {
+        const dateA = new Date(`${a.date} ${a.time}`);
+        const dateB = new Date(`${b.date} ${b.time}`);
+        return dateA.getTime() - dateB.getTime();
+      });
+      setAppointments(sorted);
+      setLoading(false);
+    };
 
-    const sorted = storedAppointments.sort((a, b) => {
-      const dateA = new Date(`${a.date} ${a.time}`);
-      const dateB = new Date(`${b.date} ${b.time}`);
-      return dateA.getTime() - dateB.getTime();
-    });
-
-    setAppointments(sorted);
+    const timer = setTimeout(fetchDashboardData, 600);
+    return () => clearTimeout(timer);
   }, []);
 
   const totalDoctors = doctors.length;
-  const totalSlots = doctors.reduce(
-    (acc, doc) => acc + doc.availableSlots.length,
-    0
-  );
+  const totalSlots = doctors.reduce((acc, doc) => acc + doc.availableSlots.length, 0);
   const specialties = new Set(doctors.map((doc) => doc.specialty)).size;
 
   const cards = [
-    {
-      title: "Available Doctors",
-      value: totalDoctors,
-      icon: <LocalHospitalIcon />,
-      bg: "bg-blue-50",
-      color: "text-blue-600",
-    },
-    {
-      title: "Booked Appointments",
-      value: appointments.length,
-      icon: <EventAvailableIcon />,
-      bg: "bg-green-50",
-      color: "text-green-600",
-    },
-    {
-      title: "Available Slots",
-      value: totalSlots,
-      icon: <AccessTimeIcon />,
-      bg: "bg-purple-50",
-      color: "text-purple-600",
-    },
-    {
-      title: "Specialties",
-      value: specialties,
-      icon: <CategoryIcon />,
-      bg: "bg-orange-50",
-      color: "text-orange-600",
-    },
+    { title: "Available Doctors", value: totalDoctors, icon: <LocalHospitalIcon />, bg: "bg-blue-50", color: "text-blue-600" },
+    { title: "My Appointments", value: appointments.length, icon: <EventAvailableIcon />, bg: "bg-green-50", color: "text-green-600" },
+    { title: "Total Slots", value: totalSlots, icon: <AccessTimeIcon />, bg: "bg-purple-50", color: "text-purple-600" },
+    { title: "Specialties", value: specialties, icon: <CategoryIcon />, bg: "bg-orange-50", color: "text-orange-600" },
   ];
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: 2 }}>
+        <CircularProgress thickness={5} size={50} />
+        <p className="text-sm font-medium text-gray-500">Syncing dashboard data...</p>
+      </Box>
+    );
+  }
 
   return (
     <Box className="px-[5%] py-5">
       {/* HEADER */}
-      <Box className="flex flex-col sm:flex-row justify-between mb-12 gap-4">
-        <Box>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Dashboard Overview
-          </h1>
-          <p className="text-gray-600">Welcome back, John 👋</p>
-        </Box>
-
+      <div className="flex flex-col sm:flex-row justify-between mb-10 gap-4">
+        <div>
+          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Dashboard Overview</h1>
+          <p className="text-base text-gray-500 mt-1">Welcome back, John 👋</p>
+        </div>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => router.push("/dashboard/doctor")}
-          sx={{ borderRadius: "8px", textTransform: "none", px: 3, py: 1.2 }}
+          sx={{ borderRadius: "10px", textTransform: "none", px: 4, py: 1.5, fontWeight: '600' }}
         >
-          Book an Appointment
+          Book Appointment
         </Button>
-      </Box>
+      </div>
 
-      {/* CARDS */}
-      <Box className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+      {/* STATS CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {cards.map((card) => (
-          <Card
-            key={card.title}
-            elevation={0}
-            className={`${card.bg} border hover:border-gray-200`}
-            sx={{ borderRadius: "16px" }}
-          >
+          <Card key={card.title} elevation={0} className={`${card.bg} border border-transparent hover:border-gray-200 transition-all`} sx={{ borderRadius: "20px" }}>
             <CardContent className="flex justify-between items-center p-6">
               <div>
-                <p className="text-sm text-gray-500">{card.title}</p>
-                <h2 className="text-3xl font-bold text-gray-900 mt-1">
-                  {card.value}
-                </h2>
+                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">{card.title}</p>
+                <h2 className="text-3xl font-black text-gray-900 mt-1">{card.value}</h2>
               </div>
-
-              <div
-                className={`p-3 rounded-xl bg-white shadow-sm ${card.color}`}
-              >
+              <div className={`p-3 rounded-2xl bg-white shadow-sm ${card.color}`}>
                 {card.icon}
               </div>
             </CardContent>
           </Card>
         ))}
-      </Box>
+      </div>
 
-      {/* SECTION HEADER */}
-      <Box className="flex justify-between items-center mb-3">
-        <h2 className="text-xl font-bold text-gray-900">
-          Upcoming Appointments
-        </h2>
-
+      {/* TABLE SECTION */}
+      <div className="flex justify-between items-end mb-4">
+        <div>
+          <h2 className="text-xl font-bold text-gray-900">Upcoming Appointments</h2>
+          <p className=" text-gray-500 my-2">Your next scheduled medical visits</p>
+        </div>
         {appointments.length > 5 && (
-          <Button
-            variant="text"
-            onClick={() => router.push("/dashboard/appointments")}
-            sx={{ textTransform: "none", fontWeight: "bold" }}
-          >
-            View All
+          <Button variant="text" onClick={() => router.push("/dashboard/appointments")} sx={{ textTransform: "none", fontWeight: "700" }}>
+            View Full Schedule
           </Button>
         )}
-      </Box>
+      </div>
 
-      {/* EMPTY STATE */}
       {appointments.length === 0 ? (
-        <Paper
-          elevation={0}
-          sx={{
-            p: 8,
-            textAlign: "center",
-            borderRadius: "16px",
-            border: "1px dashed #e5e7eb",
-          }}
-        >
-          <InboxIcon sx={{ fontSize: 60, color: "#9ca3af", mb: 2 }} />
-
-          <h3 className="text-lg font-semibold text-gray-900">
-            No Appointments Booked
-          </h3>
-
-          <p className="text-gray-500 mt-2 mb-4">
-            You haven’t scheduled any appointments yet.
-          </p>
-
-          <Button
-            variant="outlined"
-            onClick={() => router.push("/dashboard/doctor")}
-            sx={{ borderRadius: "8px", textTransform: "none" }}
-          >
-            Find a Doctor
+        <Paper elevation={0} sx={{ p: 8, textAlign: "center", borderRadius: "20px", border: "2px dashed #e2e8f0", bgcolor: '#f8fafc' }}>
+          <InboxIcon sx={{ fontSize: 60, color: "#cbd5e1", mb: 2 }} />
+          <h3 className="text-lg font-bold text-gray-900">No scheduled visits</h3>
+          <p className=" text-gray-500 mt-1 mb-4">You haven&apos;t booked any appointments with our doctors yet.</p>
+          <Button variant="outlined" onClick={() => router.push("/dashboard/doctor")} sx={{ borderRadius: "10px", textTransform: "none", fontWeight: '600' }}>
+            Browse Doctors
           </Button>
         </Paper>
       ) : (
-        <TableContainer
-          component={Paper}
-          elevation={0}
-          sx={{ borderRadius: "12px", border: "1px solid #f3f4f6" }}
-        >
-          <Table>
-            <TableHead sx={{ backgroundColor: "#f9fafb" }}>
-              <TableRow>
-                <TableCell><span className="text-xs font-semibold text-gray-500">ID</span></TableCell>
-                <TableCell><span className="text-xs font-semibold text-gray-500">Doctor</span></TableCell>
-                <TableCell><span className="text-xs font-semibold text-gray-500">Date</span></TableCell>
-                <TableCell><span className="text-xs font-semibold text-gray-500">Time</span></TableCell>
-                <TableCell><span className="text-xs font-semibold text-gray-500">Status</span></TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {appointments.slice(0, 5).map((row) => (
-                <TableRow key={row.id} hover>
-                  <TableCell>
-                    <p className="text-sm font-medium">{row.id}</p>
-                  </TableCell>
-
-                  <TableCell>
-                    <p className="text-sm">{row.doctorName}</p>
-                  </TableCell>
-
-                  <TableCell>
-                    <p className="text-sm">
-                      {new Date(row.date).toLocaleDateString()}
-                    </p>
-                  </TableCell>
-
-                  <TableCell>
-                    <p className="text-sm">{row.time}</p>
-                  </TableCell>
-
-                  <TableCell>
-                    <Chip
-                      label="Confirmed"
-                      size="small"
-                      color="success"
-                      variant="outlined"
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <AppointmentTable data={appointments} limit={5} />
       )}
     </Box>
   );
