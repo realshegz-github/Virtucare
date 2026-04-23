@@ -74,7 +74,7 @@ export default function DashboardOverview() {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => router.push("/dashboard/doctor")}
-          sx={{ borderRadius: "10px", textTransform: "none", px: 4, py: 1.5, fontWeight: '600' }}
+          sx={{ borderRadius: "10px", textTransform: "none", px: 4, py: 1.2, fontWeight: '600',backgroundColor:"#2563eb", }}
         >
           Book Appointment
         </Button>
