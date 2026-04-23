@@ -64,6 +64,7 @@ export default function LandingPage() {
                     paddingBlock: "12px",
                     textTransform: "none",
                     fontWeight: 600,
+                    backgroundColor:"#2563eb"
                   }}
                 >
                   Find a Doctor

@@ -127,7 +127,7 @@ export default function AppointmentsPage() {
             variant="contained"
             startIcon={<AddIcon />}
             onClick={() => router.push("/dashboard/doctor")}
-            sx={{ borderRadius: "8px", textTransform: "none", px: 4, py: 1.2 }}
+            sx={{ borderRadius: "8px", textTransform: "none", px: 4, py: 1.2, backgroundColor:"#2563eb" }}
           >
             Book Your First Appointment
           </Button>
