@@ -9,7 +9,6 @@ import {
   TableRow,
   Paper,
   Chip,
-  Typography,
 } from "@mui/material";
 import { Appointment } from "@/types/interface";
 
@@ -26,10 +25,24 @@ export default function AppointmentTable({ data, limit = 5 }: TableProps) {
       component={Paper}
       elevation={0}
       sx={{
-        borderRadius: "6px",
+        borderRadius: "16px", 
         border: "1px solid #f1f5f9",
-        overflow: "hidden",
+        overflowX: "auto", 
         boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.05)",
+        "&::-webkit-scrollbar": {
+          height: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          backgroundColor: "#f8fafc",
+          borderRadius: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#cbd5e1",
+          borderRadius: "8px",
+          "&:hover": {
+            backgroundColor: "#94a3b8",
+          },
+        },
       }}
     >
       <Table sx={{ minWidth: 650 }}>
@@ -37,7 +50,7 @@ export default function AppointmentTable({ data, limit = 5 }: TableProps) {
           <TableRow>
             {["ID", "Doctor", "Scheduled Date", "Time", "Status"].map(
               (head) => (
-                <TableCell key={head} sx={{ py: 2 }}>
+                <TableCell key={head} sx={{ py: 2, whiteSpace: "nowrap" }}>
                   <span className="text-[11px] font-bold text-gray-500 tracking-wider uppercase">
                     {head}
                   </span>
@@ -52,20 +65,20 @@ export default function AppointmentTable({ data, limit = 5 }: TableProps) {
               key={row.id}
               sx={{
                 "&:last-child td, &:last-child th": { border: 0 },
-                "&:hover": { backgroundColor: "#f8fafc" },
+                "&:hover": { backgroundColor: "#f8fafc", transition: "all 0.2s ease" },
               }}
             >
-              <TableCell>
+              <TableCell sx={{ whiteSpace: "nowrap" }}>
                 <span className="text-sm font-semibold text-blue-600">
                   #{row.id.split("-")[1] || row.id}
                 </span>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ whiteSpace: "nowrap" }}>
                 <span className="text-sm font-medium text-gray-900">
                   {row.doctorName}
                 </span>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ whiteSpace: "nowrap" }}>
                 <span className="text-sm text-gray-600">
                   {new Date(row.date).toLocaleDateString("en-US", {
                     month: "short",
@@ -74,10 +87,10 @@ export default function AppointmentTable({ data, limit = 5 }: TableProps) {
                   })}
                 </span>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ whiteSpace: "nowrap" }}>
                 <span className="text-sm text-gray-600">{row.time}</span>
               </TableCell>
-              <TableCell>
+              <TableCell sx={{ whiteSpace: "nowrap" }}>
                 <Chip
                   label="Confirmed"
                   size="small"

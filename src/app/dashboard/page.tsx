@@ -63,18 +63,18 @@ export default function DashboardOverview() {
   }
 
   return (
-    <Box className="px-[5%] py-5">
+    <Box className="px-[5%] py-5 w-full bg-gray-50">
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row justify-between mb-10 gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Dashboard Overview</h1>
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 tracking-tight">Dashboard Overview</h1>
           <p className="text-base text-gray-500 mt-1">Welcome back, John 👋</p>
         </div>
         <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => router.push("/dashboard/doctor")}
-          sx={{ borderRadius: "10px", textTransform: "none", px: 4, py: 1.2, fontWeight: '600',backgroundColor:"#2563eb", }}
+          sx={{ borderRadius: "10px", textTransform: "none", px: 4, py: 1, fontWeight: '600',backgroundColor:"#2563eb", }}
         >
           Book Appointment
         </Button>
@@ -83,10 +83,10 @@ export default function DashboardOverview() {
       {/* STATS CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {cards.map((card) => (
-          <Card key={card.title} elevation={0} className={`${card.bg} border border-transparent hover:border-gray-200 transition-all`} sx={{ borderRadius: "20px" }}>
-            <CardContent className="flex justify-between items-center p-6">
+          <Card key={card.title} elevation={0} className={`${card.bg} border border-transparent hover:border-gray-300 transition-all`} sx={{ borderRadius: "20px" }}>
+            <CardContent className="flex flex-wrap-reverse justify-between items-center p-6">
               <div>
-                <p className="text-sm font-bold text-gray-500 uppercase tracking-wider">{card.title}</p>
+                <p className=" font-bold text-gray-500 uppercase tracking-wider">{card.title}</p>
                 <h2 className="text-3xl font-black text-gray-900 mt-1">{card.value}</h2>
               </div>
               <div className={`p-3 rounded-2xl bg-white shadow-sm ${card.color}`}>
@@ -120,7 +120,7 @@ export default function DashboardOverview() {
           </Button>
         </Paper>
       ) : (
-        <AppointmentTable data={appointments} limit={5} />
+          <AppointmentTable data={appointments} limit={5} />
       )}
     </Box>
   );

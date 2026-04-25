@@ -58,7 +58,7 @@ export default function DashboardLayout({
       <Box
         component="main"
         className="bg-transparent w-full h-full"
-        sx={{ flexGrow: 1, px: 3, py: 5, minHeight: "100%" }}
+        sx={{ flexGrow: 1, px: 2, py: 5, minHeight: "100%" }}
       >
         <DrawerHeader />
         {children}

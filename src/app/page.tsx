@@ -8,17 +8,11 @@ import { Button } from "@mui/material";
 
 
 export default function LandingPage() {
-  // const router = useRouter();
-
-  // const handleBookAppointment = () => {
-  //   // Routes the user to the login page
-  //   router.push("/login");
-  // };
 
   return (
-    <main className="min-h-screen bg-gray-50 pb-12">
+    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
       {/* --- HERO BANNER --- */}
-      <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-slate-50 via-white to-blue-50 px-6 lg:px-20 py-16">
+      <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden  px-6 lg:px-20 py-16">
         <div className="absolute top-0 left-0 w-72 h-72 bg-blue-100 rounded-full blur-3xl opacity-50 -z-0" />
         <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-100 rounded-full blur-3xl opacity-50 -z-0" />
 
@@ -53,34 +47,37 @@ export default function LandingPage() {
               designed for better patient experiences.
             </motion.p>
 
-            <div className="flex gap-4 mt-8 flex-nowrap">
-              <Link href="/dashboard/doctor">
+            <div className="flex gap-4 w-full mt-8 flex-wrap">
+              <Link href="/dashboard/doctor" className="w-full sm:w-max">
                 <Button
                   variant="contained"
                   size="large"
                   sx={{
-                    borderRadius: "999px",
+                    borderRadius: "8px",
                     paddingInline: "28px",
                     paddingBlock: "12px",
                     textTransform: "none",
                     fontWeight: 600,
-                    backgroundColor:"#2563eb"
+                    backgroundColor:"#2563eb",
+                  width:"100%"
+                    
                   }}
                 >
                   Find a Doctor
                 </Button>
               </Link>
 
-              <Link href="/dashboard">
+              <Link href="/dashboard"className="w-full sm:w-max">
                 <Button
                   variant="outlined"
                   size="large"
                   sx={{
-                    borderRadius: "999px",
+                    borderRadius: "8px",
                     paddingInline: "28px",
                     paddingBlock: "12px",
                     textTransform: "none",
                     fontWeight: 600,
+                    width:"100%"
                   }}
                 >
                   Book Appointment
