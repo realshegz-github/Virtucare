@@ -115,7 +115,7 @@ export default function BookAppointmentPage() {
 
     setIsSubmitting(true);
 
-    // Simulate slight network delay for premium feel
+    // Simulate slight network delay 
     setTimeout(() => {
       addAppointment({
         id: crypto.randomUUID(),
@@ -161,7 +161,7 @@ export default function BookAppointmentPage() {
             }}
           >
             <CardContent className="p-8 text-center flex flex-col items-center relative">
-              <div className="absolute top-6 right-6">
+              <div className="hidden sm:flex absolute top-6 right-6">
                 <Chip
                   icon={<VerifiedIcon fontSize="small" />}
                   label="Available"
@@ -195,11 +195,11 @@ export default function BookAppointmentPage() {
                 <span className="text-sm font-bold">{doctor.specialty}</span>
               </div>
 
-              <div className="w-full bg-white rounded-2xl p-5 border border-gray-100 text-left">
+              <div className="w-full sm:bg-white rounded-2xl sm:p-5 sm:border border-gray-100 text-left">
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
                   About
                 </p>
-                <p className="text-sm text-gray-600 leading-relaxed">
+                <p className=" text-gray-600 leading-relaxed">
                   Highly experienced specialist dedicated to providing
                   exceptional patient care and comprehensive medical
                   evaluations.
@@ -212,7 +212,7 @@ export default function BookAppointmentPage() {
         {/* RIGHT COL: BOOKING FORM */}
         <div className="lg:col-span-8">
           <div className="mb-8">
-            <h2 className="text-3xl font-black text-gray-900">
+            <h2 className="text-xl sm:text-3xl font-bold text-gray-900 tracking-tight">
               Book Appointment
             </h2>
             <p className="text-gray-500 mt-2">

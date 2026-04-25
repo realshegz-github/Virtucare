@@ -83,7 +83,7 @@ export default function AppointmentsPage() {
       {/* HEADER */}
       <Box className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
         <Box>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-3xl font-bold text-gray-900 tracking-tight">
             My Appointments
           </h1>
           <p className="text-gray-600">
@@ -95,7 +95,7 @@ export default function AppointmentsPage() {
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => router.push("/dashboard/doctor")}
-          sx={{ borderRadius: "8px", textTransform: "none", px: 3, py: 1.2 }}
+          sx={{ borderRadius: "8px", textTransform: "none", px: 3, py: 1.2,backgroundColor:"#2563eb"  }}
         >
           Book New
         </Button>
